@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>配信</title>
+<link href="https://vjs.zencdn.net/7.20.1/video-js.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div style="float: left; width: 80%;" class="container">
+    <h1 class="heading">Stream</h1>
+    <p>下に、配信をする、または配信を見る部屋の名前を入力してください<br>簡単な名前にすると、他の人が入ってくる可能性があります(testなど)</p>
+    <p></p>
+    <div class="room">
+      <div id="menu">
+        <video id="js-local-stream" style="display: none;"></video>
+        <div id="menu_input">
+          <input type="text" placeholder="Room Name" id="js-room-id">
+          <button id="js-start-trigger">Start streaming</button>
+          <button id="js-watch-trigger">Watch streaming</button>
+        </div>
+        <button id="js-leave-trigger" style="display: none;">Leave</button>
+      </div>
+
+      <div class="remote-streams" id="js-remote-streams">
+        <p id="stream_p" style="display: none;">配信</p>
+      </div>
+      <div>
+        <p>メッセージ(部屋に入ると、機能します)</p>
+        <form action="" onsubmit="return cancelsubmit()">
+          <input type="text" id="js-local-text">
+          <input type="submit" id="js-send-trigger" value="送信">
+        </form>
+
+      </div>
+    </div>
+
+    <p class="meta" id="js-meta"></p>
+  </div>
+  <div style="float: right; width: 20%;" class="messages" id="members">
+    <p><img src="square-caret-down-regular.svg" height="15px">Menu</p>
+    <p id="realtime"></p>
+    <p id="room-id"></p>
+    <div id="room_member">
+      <p><img src="square-caret-down-regular.svg" height="15px">MemberList</p>
+    </div>
+    <p>=======comment=======</p>
+    <pre class="messages" id="js-messages"></pre>
+  </div>
+  <span id="js-room-mode" style="display: none;">mesh</span>
+  <script src="//cdn.webrtc.ecl.ntt.com/skyway-4.4.4.js"></script>
+  <script src="./script.js"></script>
+  <script>
+    function twoDigit(num) {
+      let ret;
+      if (num < 10)
+        ret = "0" + num;
+      else
+        ret = num;
+      return ret;
+    }
+    function showClock() {
+      let nowTime = new Date();
+      let nowHour = twoDigit(nowTime.getHours());
+      let nowMin = twoDigit(nowTime.getMinutes());
+      let nowSec = twoDigit(nowTime.getSeconds());
+      let msg = "現在時刻:" + nowHour + ":" + nowMin + ":" + nowSec;
+      document.getElementById("realtime").innerHTML = msg;
+    }
+    setInterval('showClock()', 1000);
+
+    function cancelsubmit() {
+      return false;
+    }
+  </script>
+  <script src="https://vjs.zencdn.net/7.20.1/video.min.js"></script>
+</body>
+
+</html>
